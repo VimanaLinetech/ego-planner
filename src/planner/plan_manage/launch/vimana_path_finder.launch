@@ -1,13 +1,13 @@
 <launch>
   <!-- size of map, change the size inflate x, y, z according to your application -->
-  <arg name="map_size_x" value="10.0"/>
-  <arg name="map_size_y" value="10.0"/>
-  <arg name="map_size_z" value=" 3.0"/>
+  <arg name="map_size_x" value="20.0"/>
+  <arg name="map_size_y" value="20.0"/>
+  <arg name="map_size_z" value="10.0"/>
 
   <!-- topic of your odometry such as VIO or LIO -->
   <arg name="odom_topic" value="/rtabmap/rtabmap/odom" />
 
-  <node pkg="tf2_ros" type="static_transform_publisher" name="world_map_linker" args="0 0 0 0 0 0 world map"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="world_map_linker" args="0 0 0 0 0 0 world map"/> 
 
   <!-- main algorithm params -->
   <include file="$(find ego_planner)/launch/advanced_param.xml">
@@ -28,10 +28,10 @@
     <arg name="cloud_topic" value="/cloud"/>
 
     <!-- intrinsic params of the depth camera -->
-    <arg name="cx" value="1018.1044921875"/>
-    <arg name="cy" value="781.2349853515625"/>
-    <arg name="fx" value="979.558349609375"/>
-    <arg name="fy" value="979.2691040039062"/>
+    <arg name="cx" value="321.17840576171875"/>
+    <arg name="cy" value="339.126708984375"/>
+    <arg name="fx" value="504.8011779785156"/>
+    <arg name="fy" value="504.8085632324219"/>
 
     <!-- maximum velocity and acceleration the drone will reach -->
     <arg name="max_vel" value="2.0" />
@@ -70,13 +70,12 @@
     
   </include>
 
-  <!-- <include file="$(find ego_planner)/launch/rviz.launch"/> -->
+  <include file="$(find ego_planner)/launch/rviz.launch"/>
 
   <node pkg="ego_planner" name="odom_pose_converter" type="odom2pose.py" output="screen">
     <param name="odom_topic" value="/rtabmap/rtabmap/odom"/>
     <param name="pose_pub_topic" value="/camera/pose"/>
   </node>
-
 
   <!-- trajectory server -->
   <node pkg="ego_planner" name="traj_server" type="traj_server" output="screen">
