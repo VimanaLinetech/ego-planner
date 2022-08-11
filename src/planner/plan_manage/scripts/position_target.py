@@ -5,7 +5,7 @@ from mavros_msgs.msg import StatusText
 
 class OdometryConverter:
     def __init__(self):
-        rospy.init_node('pos_command_msg_converter')
+        rospy.init_node('onboard-offboard-broadcaster')
 
         self.pose_pub = rospy.Publisher("/mavros/statustext/send", StatusText, queue_size=10)
 
