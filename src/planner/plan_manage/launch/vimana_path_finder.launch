@@ -5,7 +5,7 @@
   <arg name="map_size_z" value="10.0"/>
 
   <!-- topic of your odometry such as VIO or LIO -->
-  <arg name="odom_topic" value="/rtabmap/rtabmap/odom" />
+  <arg name="odom_topic" value="/mavros/global_position/local" />
 
   <node pkg="tf2_ros" type="static_transform_publisher" name="world_map_linker" args="0 0 0 0 0 0 world map"/> 
 
@@ -73,9 +73,12 @@
   <include file="$(find ego_planner)/launch/rviz.launch"/>
 
   <node pkg="ego_planner" name="odom_pose_converter" type="odom2pose.py" output="screen">
-    <param name="odom_topic" value="/rtabmap/rtabmap/odom"/>
+    <param name="odom_topic" value="$(arg odom_topic)"/>
     <param name="pose_pub_topic" value="/camera/pose"/>
   </node>
+
+  <node pkg="ego_planner" name="odom_pose_converter" type="interpreter_bridge.py" output="screen"></node>
+  <!-- <node pkg="ego_planner" name="odom_pose_converter" type="planner2apm.py" output="screen"></node> -->
 
   <!-- trajectory server -->
   <node pkg="ego_planner" name="traj_server" type="traj_server" output="screen">
